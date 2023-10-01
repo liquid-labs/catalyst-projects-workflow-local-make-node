@@ -3,8 +3,20 @@
   "version": "1.0.0-alpha.0",
   "description": "",
   "main": "dist/catalyst-builder-node.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "make",
+    "lint": "make lint",
+    "lint:fix": "make lint-fix",
+    "test": "make test",
+    "prepack": "make build",
+    "preversion": "make test && make lint",
+    "qa": "make qa"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [],
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
@@ -13,5 +25,14 @@
   "bugs": {
     "url": "https://github.com/liquid-labs/catalyst-builder-node/issues"
   },
-  "homepage": "https://github.com/liquid-labs/catalyst-builder-node#readme"
+  "homepage": "https://github.com/liquid-labs/catalyst-builder-node#readme",
+  "devDependencies": {
+    "@liquid-labs/catalyst-scripts-node-project": "^1.0.0-alpha.22"
+  },
+  "dependencies": {
+    "@liquid-labs/catalyst-lib-build": "^1.0.0-alpha.3",
+    "@liquid-labs/catalyst-lib-makefiles": "file:.yalc/@liquid-labs/catalyst-lib-makefiles",
+    "@liquid-labs/http-smart-response": "^1.0.0-alpha.3",
+    "http-error": "^0.0.6"
+  }
 }
