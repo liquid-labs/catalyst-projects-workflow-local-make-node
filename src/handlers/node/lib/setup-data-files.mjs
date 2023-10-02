@@ -9,7 +9,7 @@ const setupDataFiles = async({ cwd }) => {
 
   const contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
-CATALYST_DATA_SELECTOR=\( -path "*/test/data/*"  -o -path "*/test/data-*/*" -o -path "*/test-data/*" \)
+CATALYST_DATA_SELECTOR=\\( -path "*/test/data/*"  -o -path "*/test/data-*/*" -o -path "*/test-data/*" \\)
 
 # all test data (cli and lib)
 CATALYST_TEST_DATA_SRC:=$(shell find $(SRC) -type f $(CATALYST_NODE_PROJECT_DATA_SELECTOR))
@@ -22,15 +22,17 @@ CATALYST_TEST_DATA_BUILT:=$(patsubst $(SRC)/%, $(TEST_STAGING)/%, $(CATALYST_JS_
 
   fs.writeFile(absDataFinder, contents)
 
-  return [
-    {
-      builder : myName,
-      version : myVersion,
-      priority,
-      path    : relDataFinder,
-      purpose : 'Sets up vars listing test data files which will need to be copied under the test staging dir.'
-    }
-  ]
+  return {
+    scripts : [
+      {
+        builder : myName,
+        version : myVersion,
+        priority,
+        path    : relDataFinder,
+        purpose : 'Sets up vars listing test data files which will need to be copied under the test staging dir.'
+      }
+    ]
+  }
 }
 
 export { setupDataFiles }

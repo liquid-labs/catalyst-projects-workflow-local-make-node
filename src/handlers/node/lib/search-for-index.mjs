@@ -1,3 +1,5 @@
+import createError from 'http-errors'
+
 const searchForIndex = (files) => {
   const indexes = files.filter((f) => f.name.match(/^index\.[mc]?js$/))
   if (indexes.length > 1) {

@@ -33,6 +33,8 @@
     "@liquid-labs/catalyst-lib-build": "^1.0.0-alpha.3",
     "@liquid-labs/catalyst-lib-makefiles": "file:.yalc/@liquid-labs/catalyst-lib-makefiles",
     "@liquid-labs/http-smart-response": "^1.0.0-alpha.3",
-    "http-error": "^0.0.6"
+    "@liquid-labs/npm-toolkit": "^1.0.0-alpha.4",
+    "http-error": "^0.0.6",
+    "lodash": "^4.17.21"
   }
 }

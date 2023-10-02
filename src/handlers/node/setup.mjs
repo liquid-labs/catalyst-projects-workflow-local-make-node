@@ -6,11 +6,13 @@ import createError from 'http-errors'
 
 import { setupMakefileInfra, setupMakefileLocations } from '@liquid-labs/catalyst-lib-makefiles'
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
+import { install } from '@liquid-labs/npm-toolkit'
 
 import { searchForIndex } from './lib/search-for-index'
 import { setupLibraryBuilds, setupExecutableBuilds } from './lib/setup-builds'
 import { setupDataFiles } from './lib/setup-data-files'
 import { setupJSFiles } from './lib/setup-js-files'
+import { setupResources } from './lib/setup-resources'
 
 const help = {
   name        : 'Setup node project',
@@ -87,7 +89,7 @@ const parameters = [
   }
 ]
 
-const func = ({ reporter }) => async(req, res) => {
+const func = ({ app, reporter }) => async(req, res) => {
   reporter.isolate()
 
   const {
@@ -194,19 +196,38 @@ const func = ({ reporter }) => async(req, res) => {
       testStagingPath
     }),
     setupDataFiles({ cwd }),
-    setupJSFiles(({ cwd }))
-    // setupLibraryBuilds({ withLibs }),
-    // setupExecutableBuilds({ withExecutables })
+    setupResources({ cwd, noDoc, noTest }),
+    setupJSFiles({ cwd }),
+    setupLibraryBuilds({ cwd, reporter, withLibs }),
+    setupExecutableBuilds({ cwd, reporter, withExecutables })
   ])
-  const scripts = results.flat().sort((a, b) => {
-    if (a.priority < b.priority) return -1
-    else if (a.priority > b.priority) return 1
-    else return 0
-  })
 
-  const msg = `Created ${scripts.length} files.`
+  let allScripts = []
+  const dependencyIndex = {}
+  for (const result of results) {
+    const { dependencies = [], scripts = [] } = result
+    allScripts.push(...scripts)
+    for (const dep of dependencies) {
+      dependencyIndex[dep] = true
+    }
+  }
+  const dependencies = Object.keys(dependencyIndex).sort()
 
-  httpSmartResponse({ msg, data : scripts, req, res })
+  reporter.log(`Installing ${dependencies.join(', ')}`)
+  install({ devPaths: app.ext.devPaths, latest: true, pkgs: dependencies, targetPath: cwd })
+
+  allScripts = allScripts
+    .sort((a, b) => {
+      if (a.priority < b.priority) return -1
+      else if (a.priority > b.priority) return 1
+      else return 0
+    })
+
+  const data = { dependencies, scripts: allScripts }
+
+  const msg = `Created ${allScripts.length} files.`
+
+  httpSmartResponse({ msg, data, req, res })
 }
 
 export { help, func, method, parameters, path }
