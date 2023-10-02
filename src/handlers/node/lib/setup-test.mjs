@@ -4,7 +4,7 @@ import * as fs from 'node:fs/promises'
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
 import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
-import { ESLINT_RESOURCE } from './constants'
+import { ESLINT_RESOURCE, BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
 const setupTest = async({ cwd, noDoc, noTest }) => {
   const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
@@ -69,7 +69,7 @@ $(CATALYST_COVERAGE_REPORTS): $(CATALYST_TEST_PASS_MARKER)
   await fs.writeFile(absTestPath, contents)
 
   return {
-    dependencies : [ESLINT_RESOURCE],
+    dependencies : [ESLINT_RESOURCE, BABEL_AND_ROLLUP_RESOURCE],
     scripts      : [
       {
         builder : myName,

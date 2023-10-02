@@ -8,7 +8,7 @@ import { snakeCase } from 'lodash'
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
 import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
-import { ROLLUP_RESOURCE } from './constants'
+import { BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
 const setupBuilds = async({ builds, cwd, makeExecutable = false, reporter }) => {
   const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
@@ -68,7 +68,7 @@ $(${varName}): package.json $(CATALYST_ALL_NON_TEST_JS_FILES_SRC)
   }
 
   return {
-  	dependencies : [ROLLUP_RESOURCE],
+  	dependencies : [BABEL_AND_ROLLUP_RESOURCE],
   	scripts
   }
 }
