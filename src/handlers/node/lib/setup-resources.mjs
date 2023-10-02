@@ -16,12 +16,12 @@ CATALYST_ROLLUP_CONFIG=$(shell npm explore ${ROLLUP_RESOURCE} -- pwd)/dist/rollu
 
   if (noTest !== true) {
     contents += `\nCATALYST_JEST:=npx jest
-CATALYST_JEST_CONFIG:=$(shell npm explore ${JEST_RESOURCE} -- pwd)/dist/jest.config.json\n`
+CATALYST_JEST_CONFIG:=$(shell npm explore ${JEST_RESOURCE} -- pwd)/dist/jest.config.js\n`
   }
 
   if (noLint !== true) {
     contents += `\nCATALYST_ESLINT:=npx eslint
-CATALYST_ESLINT_CONFIG:=$(shell npm explore ${ESLINT_RESOURCE} -- pwd)/dist/eslint.config.json\n`
+CATALYST_ESLINT_CONFIG:=$(shell npm explore ${ESLINT_RESOURCE} -- pwd)/dist/eslint.config.js\n`
   }
 
   const priority = 10

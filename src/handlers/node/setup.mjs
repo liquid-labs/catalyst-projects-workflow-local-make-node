@@ -12,6 +12,7 @@ import { searchForIndex } from './lib/search-for-index'
 import { setupLibraryBuilds, setupExecutableBuilds } from './lib/setup-builds'
 import { setupDataFiles } from './lib/setup-data-files'
 import { setupJSFiles } from './lib/setup-js-files'
+import { setupLint } from './lib/setup-lint'
 import { setupResources } from './lib/setup-resources'
 
 const help = {
@@ -182,7 +183,8 @@ const func = ({ app, reporter }) => async(req, res) => {
   }
 
   reporter.log('Setting up basic makefile infrastructure...')
-  const results = await Promise.all([
+
+  const scriptBuilders = [
     setupMakefileInfra({ cwd, noDoc, noLint, noTest }),
     setupMakefileLocations({
       cwd,
@@ -200,7 +202,13 @@ const func = ({ app, reporter }) => async(req, res) => {
     setupJSFiles({ cwd }),
     setupLibraryBuilds({ cwd, reporter, withLibs }),
     setupExecutableBuilds({ cwd, reporter, withExecutables })
-  ])
+  ]
+
+  if (noLint !== true) {
+    scriptBuilders.push(setupLint({ cwd, noDoc, noTest }))
+  }
+
+  const results = await Promise.all(scriptBuilders)
 
   let allScripts = []
   const dependencyIndex = {}
