@@ -40,7 +40,7 @@ $(CATALYST_LINT_REPORT) $(CATALYST_LINT_PASS_MARKER): $(CATALYST_ALL_JS_FILES_SR
 	    $(LINT_IGNORE_PATTERNS) \\
 	    . \\
 	    | tee -a $(CATALYST_LINT_REPORT); \\
-	  touch $@ )
+	  touch $(CATALYST_LINT_PASS_MARKER) )
 
 lint-fix:
 	@( set -e; set -o pipefail; \\

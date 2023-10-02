@@ -53,7 +53,7 @@ $(CATALYST_TEST_PASS_MARKER) $(CATALYST_TEST_REPORT) &: package.json $(CATALYST_
 	    --runInBand \\
 	    $(TEST) 2>&1 ) \\
 	  | tee -a $(CATALYST_TEST_REPORT); \\
-	  touch $@ )
+	  touch $(CATALYST_TEST_PASS_MARKER) )
 
 $(CATALYST_COVERAGE_REPORTS): $(CATALYST_TEST_PASS_MARKER)
 	rm -rf $(QA)/coverage
