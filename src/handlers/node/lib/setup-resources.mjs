@@ -11,8 +11,11 @@ const setupResources = async({ cwd, /* noDoc, */ noTest, noLint }) => {
 
   let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
+CATALYST_BABEL:=npx babel
+CATALYST_BABEL_CONFIG:=$(shell npm explore ${ROLLUP_RESOURCE} -- pwd)/dist/babel/babel.config.cjs
+
 CATALYST_ROLLUP:=npx rollup
-CATALYST_ROLLUP_CONFIG=$(shell npm explore ${ROLLUP_RESOURCE} -- pwd)/dist/rollup/rollup.config.mjs\n`
+CATALYST_ROLLUP_CONFIG:=$(shell npm explore ${ROLLUP_RESOURCE} -- pwd)/dist/rollup/rollup.config.mjs\n`
 
   if (noTest !== true) {
     contents += `\nCATALYST_JEST:=npx jest

@@ -68,7 +68,7 @@ lint-fix:
         version : myVersion,
         priority,
         path    : relLintPath,
-        purpose : 'Provides lint functionality.'
+        purpose : 'Provides lint functionality with eslint.'
       }
     ]
   }

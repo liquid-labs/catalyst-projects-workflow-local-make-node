@@ -14,6 +14,7 @@ import { setupDataFiles } from './lib/setup-data-files'
 import { setupJSFiles } from './lib/setup-js-files'
 import { setupLint } from './lib/setup-lint'
 import { setupResources } from './lib/setup-resources'
+import { setupTest } from './lib/setup-test'
 
 const help = {
   name        : 'Setup node project',
@@ -206,6 +207,10 @@ const func = ({ app, reporter }) => async(req, res) => {
 
   if (noLint !== true) {
     scriptBuilders.push(setupLint({ cwd, noDoc, noTest }))
+  }
+
+  if (noTest !== true) {
+    scriptBuilders.push(setupTest({ cwd }))
   }
 
   const results = await Promise.all(scriptBuilders)
