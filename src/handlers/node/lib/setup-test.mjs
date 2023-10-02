@@ -56,6 +56,7 @@ $(CATALYST_TEST_PASS_MARKER) $(CATALYST_TEST_REPORT) &: package.json $(CATALYST_
 	  touch $@ )
 
 $(CATALYST_COVERAGE_REPORTS): $(CATALYST_TEST_PASS_MARKER)
+	rm -rf $(QA)/coverage
 	mv $(TEST_STAGING)/coverage $(QA)
 
 #####
