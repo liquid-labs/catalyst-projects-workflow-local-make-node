@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
@@ -9,13 +10,12 @@ import { ESLINT_RESOURCE, BABEL_AND_ROLLUP_RESOURCE } from './constants'
 const setupTest = async({ cwd, noDoc, noTest }) => {
   const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
 
-
-  // Tried to use '--testPathPattern=$(TEST_STAGING)' awithout the 'cd $(TEST_STAGING)', but it seemed to have no 
-  // effect' '--runInBand' because some suites require serial execution (yes, it's "best practice" to have unit tests 
-  // totally independent, but in practice there are sometimes good reasons why it's useful or necessary to run 
+  // Tried to use '--testPathPattern=$(TEST_STAGING)' awithout the 'cd $(TEST_STAGING)', but it seemed to have no
+  // effect' '--runInBand' because some suites require serial execution (yes, it's "best practice" to have unit tests
+  // totally independent, but in practice there are sometimes good reasons why it's useful or necessary to run
   // sequentially); also, it may be faster this way; see:
-	// https://stackoverflow.com/questions/43864793/why-does-jest-runinband-speed-up-tests
-  let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
+  // https://stackoverflow.com/questions/43864793/why-does-jest-runinband-speed-up-tests
+  const contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
 #####
 # test rules
@@ -62,7 +62,7 @@ $(CATALYST_COVERAGE_REPORTS): $(CATALYST_TEST_PASS_MARKER)
 #####
 # end test
 #####`
-  
+
   const priority = 55
   const relTestPath = fsPath.join('make', priority + '-test.mk')
   const absTestPath = fsPath.join(cwd, relTestPath)

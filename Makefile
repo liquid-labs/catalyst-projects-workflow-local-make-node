@@ -93,6 +93,7 @@ $(CATALYST_JS_TEST_FILES_BUILT) &: $(CATALYST_JS_ALL_FILES_SRC)
 	mkdir -p $(TEST_STAGING)
 	NODE_ENV=test $(CATALYST_JS_BABEL) \
 		--config-file=$(INSTALL_BASE)/dist/babel/babel.config.cjs \
+		--ignore '**/test/data/**/*' \
 		--out-dir=./$(TEST_STAGING) \
 		--source-maps=inline \
 		$(SRC)

@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
@@ -7,7 +8,7 @@ import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 import { ESLINT_RESOURCE } from './constants'
 
 const setupLint = async({ cwd, noDoc, noTest }) => {
-	const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
+  const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
 
   let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
@@ -21,13 +22,13 @@ LINT_TARGETS+=$(CATALYST_LINT_REPORT) $(CATALYST_LINT_PASS_MARKER)
 PRECIOUS_TARGETS+=$(CATALYST_LINT_REPORT)
 
 LINT_IGNORE_PATTERNS:=--ignore-pattern '$(DIST)/**/*'`
-if (noTest !== true) {
-	contents += `\\\n--ignore-pattern '$(TEST_STAGING)/**/*'`
-}
-if (noDoc !== true) {
-	contents += `\\\n--ignore-pattern '$(DOCS)/**/*'`
-}
-contents += `
+  if (noTest !== true) {
+    contents += '\\\n--ignore-pattern \'$(TEST_STAGING)/**/*\''
+  }
+  if (noDoc !== true) {
+    contents += '\\\n--ignore-pattern \'$(DOCS)/**/*\''
+  }
+  contents += `
 
 $(CATALYST_LINT_REPORT) $(CATALYST_LINT_PASS_MARKER): $(CATALYST_ALL_JS_FILES_SRC)
 	mkdir -p $(dir $@)
@@ -53,8 +54,8 @@ lint-fix:
 #####
 # end lint
 #####`
-	
-	const priority = 55
+
+  const priority = 55
   const relLintPath = fsPath.join('make', priority + '-lint.mk')
   const absLintPath = fsPath.join(cwd, relLintPath)
 
