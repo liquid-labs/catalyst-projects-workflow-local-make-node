@@ -5,7 +5,6 @@ import * as fsPath from 'node:path'
 import createError from 'http-errors'
 
 import { setupMakefileInfra, setupMakefileLocations } from '@liquid-labs/catalyst-lib-makefiles'
-import { install } from '@liquid-labs/npm-toolkit'
 
 import { searchForIndex } from './search-for-index'
 import { setupLibraryBuilds, setupExecutableBuilds } from './setup-builds'
@@ -25,7 +24,6 @@ const setupProject = async(options) => {
     docSrcPath = 'doc',
     noDoc,
     noLint,
-    noInstall, // this is for testing
     noTest,
     reporter,
     srcPath = 'src',
@@ -67,7 +65,6 @@ const setupProject = async(options) => {
     }
 
     const rootFiles = await fs.readdir(absSource, { withFileTypes : true })
-    console.log('rootFiles:', rootFiles) // DEBUG
     const rootIndex = searchForIndex(rootFiles)
     if (rootIndex !== undefined) {
       reporter.log(`Found root index, treating as single ${isExecutable === true ? 'executable' : 'library'}.`);
@@ -148,14 +145,6 @@ const setupProject = async(options) => {
     }
   }
   const dependencies = Object.keys(dependencyIndex).sort()
-
-  if (noInstall === true) {
-    reporter.log('Skipping dependency install.')
-  }
-  else {
-    reporter.log(`Installing ${dependencies.join(', ')}`)
-    install({ devPaths : app.ext.devPaths, latest : true, pkgs : dependencies, targetPath : cwd })
-  }
 
   allScripts = allScripts
     .sort((a, b) => {

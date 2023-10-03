@@ -1,6 +1,7 @@
 import createError from 'http-errors'
 
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
+import { install } from '@liquid-labs/npm-toolkit'
 
 import { setupProject } from './lib/setup-project'
 
@@ -35,9 +36,19 @@ const parameters = [
     summary   : "Applies the default build logic except that a single entry file under the source directory is treated as the source for an executable rather than a library. This setting is ignored if 'withExecutables' or 'withLibs' is specified."
   },
   {
+    name: 'noDevInstall',
+    isBoolean: true,
+    summary: "If true, supresses the default behavior of looking for local development packages of resource packages to install. In other words, will always use the latest published package."
+  },
+  {
     name      : 'noDoc',
     isBoolean : true,
     summary   : "Excludes 'doc' target from the generated makefiles."
+  },
+  {
+    name      : 'noInstall',
+    isBoolean : true,
+    summary   : "Does not install build, test, lint, etc. resources which may be needed by the scripts. Can be useful when you have set up the depencies on a specific version and don't want to override that."
   },
   {
     name      : 'noLint',
@@ -87,7 +98,18 @@ const func = ({ app, reporter }) => async(req, res) => {
     throw createError.BadRequest("Called 'node setup', but working dir 'X-CWD' header not found.")
   }
 
-  const data = setupProject({ app, cwd, reporter, ...req.vars })
+  const data = await setupProject({ app, cwd, reporter, ...req.vars })
+
+  const { noDevInstall, noInstall } = req.vars
+  if (noInstall === true) {
+    reporter.log('Skipping dependency install.')
+  }
+  else {
+    const { dependencies } = data
+    reporter.log(`Installing ${dependencies.join(', ')}`)
+    const devPaths = noDevInstall === true ? [] : app.ext.devPaths
+    install({ devPaths, latest : true, pkgs : dependencies, saveDev: true, targetPath : cwd })
+  }
 
   const msg = `Created ${data.scripts} files.`
 
