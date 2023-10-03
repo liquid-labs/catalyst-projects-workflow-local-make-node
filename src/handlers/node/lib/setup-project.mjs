@@ -16,7 +16,6 @@ import { setupTest } from './setup-test'
 
 const setupProject = async(options) => {
   const {
-    app,
     cwd,
     distPath = 'dist',
     isExecutable,

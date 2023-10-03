@@ -36,9 +36,9 @@ const parameters = [
     summary   : "Applies the default build logic except that a single entry file under the source directory is treated as the source for an executable rather than a library. This setting is ignored if 'withExecutables' or 'withLibs' is specified."
   },
   {
-    name: 'noDevInstall',
-    isBoolean: true,
-    summary: "If true, supresses the default behavior of looking for local development packages of resource packages to install. In other words, will always use the latest published package."
+    name      : 'noDevInstall',
+    isBoolean : true,
+    summary   : 'If true, supresses the default behavior of looking for local development packages of resource packages to install. In other words, will always use the latest published package.'
   },
   {
     name      : 'noDoc',
@@ -98,7 +98,7 @@ const func = ({ app, reporter }) => async(req, res) => {
     throw createError.BadRequest("Called 'node setup', but working dir 'X-CWD' header not found.")
   }
 
-  const data = await setupProject({ app, cwd, reporter, ...req.vars })
+  const data = await setupProject({ cwd, reporter, ...req.vars })
 
   const { noDevInstall, noInstall } = req.vars
   if (noInstall === true) {
@@ -108,7 +108,7 @@ const func = ({ app, reporter }) => async(req, res) => {
     const { dependencies } = data
     reporter.log(`Installing ${dependencies.join(', ')}`)
     const devPaths = noDevInstall === true ? [] : app.ext.devPaths
-    install({ devPaths, latest : true, pkgs : dependencies, saveDev: true, targetPath : cwd })
+    install({ devPaths, latest : true, pkgs : dependencies, saveDev : true, targetPath : cwd })
   }
 
   const msg = `Created ${data.scripts} files.`
