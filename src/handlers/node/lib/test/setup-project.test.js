@@ -11,7 +11,7 @@ const reporter = {
 describe('setupProjects', () => {
   test('creates files for single, root lib package', async() => {
     const cwd = fsPath.join(__dirname, 'data', 'pkgA')
-    const data = await setupProject({ cwd, noDoc : true, noInstall : true, reporter })
+    const data = await setupProject({ cwd, noDoc : true, reporter })
 
     expect(data.scripts).toHaveLength(9)
   })
