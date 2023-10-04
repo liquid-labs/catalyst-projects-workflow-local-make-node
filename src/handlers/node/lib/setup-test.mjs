@@ -45,7 +45,7 @@ $(CATALYST_TEST_FILES_BUILT) &: $(CATALYST_ALL_JS_FILES_SRC)
 		$(SRC)
 
 $(CATALYST_TEST_PASS_MARKER) $(CATALYST_TEST_REPORT) $(TEST_STAGING)/coverage &: package.json $(CATALYST_TEST_FILES_BUILT) $(CATALYST_TEST_DATA_BUILT)
-	rm -f $@
+	rm -rf $@
 	mkdir -p $(dir $@)
 	echo -n 'Test git rev: ' > $(CATALYST_TEST_REPORT)
 	git rev-parse HEAD >> $(CATALYST_TEST_REPORT)
