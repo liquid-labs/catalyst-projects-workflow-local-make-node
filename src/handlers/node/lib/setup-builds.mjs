@@ -29,7 +29,7 @@ const setupBuilds = async({ builds, cwd, makeExecutable = false, reporter }) => 
 # build ${buildTarget}
 #####
 
-${varName}:=$(DIST)/${buildTarget}
+${varName}:=$(DIST)/${targetName}
 ${varName}_ENTRY=$(SRC)/${entryFile}
 BUILD_TARGETS+=$(${varName})
 
