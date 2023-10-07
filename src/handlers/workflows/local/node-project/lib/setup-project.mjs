@@ -76,7 +76,7 @@ const setupProject = async(options) => {
         const libIndex = searchForIndex(libFiles)
         if (libIndex !== undefined) {
           reporter.log('Found lib index, adding to library build list.')
-          withLibs.push(fsPath.join(srcPath, 'lib') + ':' + main)
+          withLibs.push(fsPath.join('lib', libIndex) + ':' + main)
         }
       }
       const execPaths = rootFiles.filter((f) => f.isDirectory()
