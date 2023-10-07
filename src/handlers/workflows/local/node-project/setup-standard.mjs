@@ -102,7 +102,7 @@ const func = ({ app, reporter }) => async(req, res) => {
   const data = await setupProject({ cwd, reporter, ...req.vars })
   data.config = req.vars
 
-  await saveBuilderConfig ({ config: data, path, pkgRoot: cwd })
+  await saveBuilderConfig({ config : data, path, pkgRoot : cwd })
 
   const { noDevInstall, noInstall } = req.vars
   if (noInstall === true) {
