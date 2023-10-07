@@ -1,5 +1,6 @@
 import createError from 'http-errors'
 
+import { saveBuilderConfig } from '@liquid-labs/catalyst-lib-build'
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
 import { install } from '@liquid-labs/npm-toolkit'
 
@@ -16,7 +17,7 @@ const help = {
 }
 
 const method = 'put'
-const path = ['node', 'setup']
+const path = ['workflows', 'local', 'node-project', 'setup-standard']
 const parameters = [
   {
     name    : 'distPath',
@@ -99,6 +100,9 @@ const func = ({ app, reporter }) => async(req, res) => {
   }
 
   const data = await setupProject({ cwd, reporter, ...req.vars })
+  data.config = req.vars
+
+  await saveBuilderConfig({ config : data, path, pkgRoot : cwd })
 
   const { noDevInstall, noInstall } = req.vars
   if (noInstall === true) {
