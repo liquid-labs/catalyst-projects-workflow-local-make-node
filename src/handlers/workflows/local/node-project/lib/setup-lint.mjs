@@ -3,13 +3,16 @@ import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
-import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
 import { ESLINT_RESOURCE } from './constants'
 
-const setupLint = async({ cwd, noDoc, noTest }) => {
-  const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
-
+const setupLint = async({ 
+  myName = throw new Error("Missing required 'myName' option"),
+  myVersion = throw new Error("Missing required 'myVersion' option"),
+  noDoc,
+  noTest,
+  workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
+}) => {
   let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
 #####
@@ -57,7 +60,7 @@ lint-fix:
 
   const priority = 55
   const relLintPath = fsPath.join('make', priority + '-lint.mk')
-  const absLintPath = fsPath.join(cwd, relLintPath)
+  const absLintPath = fsPath.join(workingPkgRoot, relLintPath)
 
   await fs.writeFile(absLintPath, contents)
 

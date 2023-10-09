@@ -2,13 +2,17 @@ import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
-import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
 import { ESLINT_RESOURCE, JEST_RESOURCE, BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
-const setupResources = async({ cwd, /* noDoc, */ noTest, noLint }) => {
-  const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
-
+const setupResources = async({ 
+  myName = throw new Error("Missing required 'myName' option"),
+  myVersion = throw new Error("Missing required 'myVersion' option"), 
+  /* noDoc, */ 
+  noTest, 
+  noLint,
+  workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
+}) => {
   let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
 CATALYST_BABEL:=npx babel
@@ -29,7 +33,7 @@ CATALYST_ESLINT_CONFIG:=$(shell npm explore ${ESLINT_RESOURCE} -- pwd)/dist/esli
 
   const priority = 10
   const relResourcePath = fsPath.join('make', priority + '-resources.mk')
-  const absResourcePath = fsPath.join(cwd, relResourcePath)
+  const absResourcePath = fsPath.join(workingPkgRoot, relResourcePath)
 
   await fs.writeFile(absResourcePath, contents)
 

@@ -6,12 +6,17 @@ import * as fsPath from 'node:path'
 import { snakeCase } from 'lodash'
 
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
-import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
 import { BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
-const setupBuilds = async({ builds, cwd, makeExecutable = false, reporter }) => {
-  const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
+const setupBuilds = async({
+  builds,
+  makeExecutable = false,
+  myName = throw new Error("Missing required option 'myName'."),
+  myVersion = throw new Error("Missing required option 'myVerison'."),
+  reporter,
+  workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
+}) => {
   const scripts = []
 
   for (const build of builds) {
@@ -54,7 +59,7 @@ $(${varName}): package.json $(CATALYST_ALL_NON_TEST_JS_FILES_SRC)
 	  	+ targetName.toLowerCase().replace(/(?:[^a-z0-9-]+)/g, '-')
 	  	+ '.mk'
 	  const relBuildScriptPath = fsPath.join('make', scriptName)
-	  const absBuildScriptPath = fsPath.join(cwd, relBuildScriptPath)
+	  const absBuildScriptPath = fsPath.join(workingPkgRoot, relBuildScriptPath)
 
 	  await fs.writeFile(absBuildScriptPath, contents)
 
@@ -73,12 +78,12 @@ $(${varName}): package.json $(CATALYST_ALL_NON_TEST_JS_FILES_SRC)
   }
 }
 
-const setupExecutableBuilds = ({ cwd, reporter, withExecutables }) => {
-  return setupBuilds({ builds : withExecutables, cwd, makeExecutable : true, reporter })
+const setupExecutableBuilds = ({ workingPkgRoot, myName, myVersion, reporter, withExecutables }) => {
+  return setupBuilds({ builds : withExecutables, makeExecutable : true, myName, myVersion, reporter, workingPkgRoot })
 }
 
-const setupLibraryBuilds = ({ cwd, reporter, withLibs }) => {
-  return setupBuilds({ builds : withLibs, cwd, makeExecutable : false, reporter })
+const setupLibraryBuilds = ({ myName, myVersion, reporter, withLibs, workingPkgRoot }) => {
+  return setupBuilds({ builds : withLibs, makeExecutable : false, myName, myVersion, reporter, workingPkgRoot })
 }
 
 export { setupExecutableBuilds, setupLibraryBuilds }

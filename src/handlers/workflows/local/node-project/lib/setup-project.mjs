@@ -16,11 +16,12 @@ import { setupTest } from './setup-test'
 
 const setupProject = async(options) => {
   const {
-    cwd,
     distPath = 'dist',
     isExecutable,
     docBuildPath = 'doc',
     docSrcPath = 'doc',
+    myName = throw new Error("Missing required 'myName' option calling 'setupProject'."),
+    myVersion = throw new Error("Missing required 'myVersion' option calling 'setupProject'."),
     noDoc,
     noLint,
     noTest,
@@ -29,22 +30,23 @@ const setupProject = async(options) => {
     testStagingPath = 'test-staging',
     qaPath = 'qa',
     withExecutables = [],
-    withLibs = []
+    withLibs = [],
+    workingPkgRoot = throw new Error("Missing required 'workingPkgRoot' option.")
   } = options
 
-  const pkgPath = fsPath.join(cwd, 'package.json')
+  const pkgPath = fsPath.join(workingPkgRoot, 'package.json')
   if (!existsSync(pkgPath)) {
     throw createError.BadRequest("Current client working directory does not appear to be a package root (no 'package.json file found).")
   }
 
-  const absSource = fsPath.join(cwd, srcPath)
+  const absSource = fsPath.join(workingPkgRoot, srcPath)
   if (!existsSync(absSource)) {
     throw createError.BadRequest(`No source directory found at '${absSource}'. Set 'srcPath' parameter or create the directory.`)
   }
 
   if (withExecutables.length === 0 && withLibs.length === 0) {
     // then we need to analyze things to figure out what kind of work to do
-    const pkgPath = fsPath.join(cwd, 'package.json')
+    const pkgPath = fsPath.join(workingPkgRoot, 'package.json')
     let main
     try {
       const pkgContents = await fs.readFile(pkgPath, { encoding : 'utf8' })
@@ -53,7 +55,7 @@ const setupProject = async(options) => {
     }
     catch (e) {
       if (e.code === 'ENOENT') {
-        throw createError.BadRequest("No 'package.json' found in " + cwd, { cause : e })
+        throw createError.BadRequest("No 'package.json' found in " + workingPkgRoot, { cause : e })
       }
       else {
         throw e
@@ -86,7 +88,7 @@ const setupProject = async(options) => {
       }
       const execPath = execPaths[0]?.name
       if (execPath !== undefined) {
-        const absExecDir = fsPath.join(cwd, srcPath, execPath)
+        const absExecDir = fsPath.join(workingPkgRoot, srcPath, execPath)
         const execFiles = await fs.readdir(absExecDir, { withFileTypes : true })
         const execIndex = searchForIndex(execFiles)
         if (execIndex !== undefined) {
@@ -104,32 +106,37 @@ const setupProject = async(options) => {
 
   reporter.log('Setting up basic makefile infrastructure...')
 
+  const makeDir = fsPath.join(workingPkgRoot, 'make')
+  await fs.mkdir(makeDir, { recursive: true })
+
   const scriptBuilders = [
-    setupMakefileInfra({ cwd, noDoc, noLint, noTest }),
+    setupMakefileInfra({ myName, myVersion, noDoc, noLint, noTest, workingPkgRoot }),
     setupMakefileLocations({
-      cwd,
       distPath,
       docBuildPath,
       docSrcPath,
+      myName,
+      myVersion,
       noDoc,
       noTest,
       qaPath,
       srcPath,
-      testStagingPath
+      testStagingPath,
+      workingPkgRoot
     }),
-    setupDataFiles({ cwd }),
-    setupResources({ cwd, noDoc, noTest }),
-    setupJSFiles({ cwd }),
-    setupLibraryBuilds({ cwd, reporter, withLibs }),
-    setupExecutableBuilds({ cwd, reporter, withExecutables })
+    setupDataFiles({ myName, myVersion, workingPkgRoot }),
+    setupResources({ myName, myVersion, noDoc, noTest, workingPkgRoot }),
+    setupJSFiles({ myName, myVersion, workingPkgRoot }),
+    setupLibraryBuilds({ myName, myVersion, reporter, withLibs, workingPkgRoot }),
+    setupExecutableBuilds({ myName, myVersion, reporter, withExecutables, workingPkgRoot })
   ]
 
   if (noLint !== true) {
-    scriptBuilders.push(setupLint({ cwd, noDoc, noTest }))
+    scriptBuilders.push(setupLint({ myName, myVersion, noDoc, noTest, workingPkgRoot }))
   }
 
   if (noTest !== true) {
-    scriptBuilders.push(setupTest({ cwd }))
+    scriptBuilders.push(setupTest({ myName, myVersion, workingPkgRoot }))
   }
 
   const results = await Promise.all(scriptBuilders)

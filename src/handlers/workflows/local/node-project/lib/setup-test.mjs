@@ -3,13 +3,16 @@ import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
-import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
 import { ESLINT_RESOURCE, BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
-const setupTest = async({ cwd, noDoc, noTest }) => {
-  const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
-
+const setupTest = async({ 
+  myName = throw new Error("Missing required 'myName' option"),
+  myVersion = throw new Error("Missing required 'myVersion' option"),
+  noDoc, 
+  noTest,
+  workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
+}) => {
   // Tried to use '--testPathPattern=$(TEST_STAGING)' awithout the 'cd $(TEST_STAGING)', but it seemed to have no
   // effect' '--runInBand' because some suites require serial execution (yes, it's "best practice" to have unit tests
   // totally independent, but in practice there are sometimes good reasons why it's useful or necessary to run
@@ -68,7 +71,7 @@ $(CATALYST_COVERAGE_REPORTS): $(CATALYST_TEST_PASS_MARKER) $(TEST_STAGING)/cover
 
   const priority = 55
   const relTestPath = fsPath.join('make', priority + '-test.mk')
-  const absTestPath = fsPath.join(cwd, relTestPath)
+  const absTestPath = fsPath.join(workingPkgRoot, relTestPath)
 
   await fs.writeFile(absTestPath, contents)
 

@@ -10,8 +10,14 @@ const reporter = {
 
 describe('setupProjects', () => {
   test('creates files for single, root lib package', async() => {
-    const cwd = fsPath.join(__dirname, 'data', 'pkgA')
-    const data = await setupProject({ cwd, noDoc : true, reporter })
+    const workingPkgRoot = fsPath.join(__dirname, 'data', 'pkgA')
+    const data = await setupProject({
+      myName: '@liquid-labs/catalyst-builder-node',
+      myVersion: 'test-version',
+      noDoc : true,
+      reporter,
+      workingPkgRoot
+    })
 
     expect(data.scripts).toHaveLength(9)
   })
