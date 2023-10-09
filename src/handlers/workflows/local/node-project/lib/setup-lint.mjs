@@ -6,7 +6,7 @@ import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
 
 import { ESLINT_RESOURCE } from './constants'
 
-const setupLint = async({ 
+const setupLint = async({
   myName = throw new Error("Missing required 'myName' option"),
   myVersion = throw new Error("Missing required 'myVersion' option"),
   noDoc,

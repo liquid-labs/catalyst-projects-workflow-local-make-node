@@ -5,11 +5,11 @@ import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
 
 import { ESLINT_RESOURCE, JEST_RESOURCE, BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
-const setupResources = async({ 
+const setupResources = async({
   myName = throw new Error("Missing required 'myName' option"),
-  myVersion = throw new Error("Missing required 'myVersion' option"), 
-  /* noDoc, */ 
-  noTest, 
+  myVersion = throw new Error("Missing required 'myVersion' option"),
+  /* noDoc, */
+  noTest,
   noLint,
   workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
 }) => {

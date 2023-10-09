@@ -1,5 +1,3 @@
-import createError from 'http-errors'
-
 import { gatherBasicBuildData, saveBuilderConfig } from '@liquid-labs/catalyst-lib-build'
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
 import { install } from '@liquid-labs/npm-toolkit'
@@ -95,7 +93,7 @@ const func = ({ app, reporter }) => async(req, res) => {
   reporter.isolate()
 
   const { builderName: myName, builderVersion: myVersion, workingPkgRoot } =
-    await gatherBasicBuildData({ builderPkgDir: __diranme, req })
+    await gatherBasicBuildData({ builderPkgDir : __dirname, req })
 
   const data = await setupProject({ myName, myVersion, reporter, workingPkgRoot, ...req.vars })
   data.config = req.vars

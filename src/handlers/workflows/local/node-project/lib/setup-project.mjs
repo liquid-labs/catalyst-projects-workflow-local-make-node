@@ -107,7 +107,7 @@ const setupProject = async(options) => {
   reporter.log('Setting up basic makefile infrastructure...')
 
   const makeDir = fsPath.join(workingPkgRoot, 'make')
-  await fs.mkdir(makeDir, { recursive: true })
+  await fs.mkdir(makeDir, { recursive : true })
 
   const scriptBuilders = [
     setupMakefileInfra({ myName, myVersion, noDoc, noLint, noTest, workingPkgRoot }),

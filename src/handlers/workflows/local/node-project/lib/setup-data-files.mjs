@@ -2,7 +2,6 @@ import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
-import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
 const setupDataFiles = async({
   myName = throw new Error("Missing required 'myName' option"),
