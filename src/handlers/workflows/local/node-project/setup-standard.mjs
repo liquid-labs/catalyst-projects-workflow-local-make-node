@@ -1,6 +1,4 @@
-import createError from 'http-errors'
-
-import { saveBuilderConfig } from '@liquid-labs/catalyst-lib-build'
+import { gatherBasicBuildData, saveBuilderConfig } from '@liquid-labs/catalyst-lib-build'
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
 import { install } from '@liquid-labs/npm-toolkit'
 
@@ -94,15 +92,13 @@ const parameters = [
 const func = ({ app, reporter }) => async(req, res) => {
   reporter.isolate()
 
-  const cwd = req.get('X-CWD')
-  if (cwd === undefined) {
-    throw createError.BadRequest("Called 'node setup', but working dir 'X-CWD' header not found.")
-  }
+  const { builderName: myName, builderVersion: myVersion, workingPkgRoot } =
+    await gatherBasicBuildData({ builderPkgDir : __dirname, req })
 
-  const data = await setupProject({ cwd, reporter, ...req.vars })
+  const data = await setupProject({ myName, myVersion, reporter, workingPkgRoot, ...req.vars })
   data.config = req.vars
 
-  await saveBuilderConfig({ config : data, path, pkgRoot : cwd })
+  await saveBuilderConfig({ config : data, path, pkgRoot : workingPkgRoot })
 
   const { noDevInstall, noInstall } = req.vars
   if (noInstall === true) {
@@ -112,7 +108,7 @@ const func = ({ app, reporter }) => async(req, res) => {
     const { dependencies } = data
     reporter.log(`Installing ${dependencies.join(', ')}`)
     const devPaths = noDevInstall === true ? [] : app.ext.devPaths
-    install({ devPaths, latest : true, pkgs : dependencies, saveDev : true, targetPath : cwd })
+    install({ devPaths, latest : true, pkgs : dependencies, saveDev : true, targetPath : workingPkgRoot })
   }
 
   const msg = `Created ${data.scripts} files.`

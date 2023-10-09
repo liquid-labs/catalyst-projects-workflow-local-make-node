@@ -2,11 +2,12 @@ import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
 import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
-import { getPackageNameAndVersion } from '@liquid-labs/catalyst-lib-build'
 
-const setupJSFiles = async({ cwd }) => {
-  const [myName, myVersion] = await getPackageNameAndVersion({ pkgDir : __dirname })
-
+const setupJSFiles = async({
+  myName = throw new Error("Missing required 'myName' option"),
+  myVersion = throw new Error("Missing required 'myVersion' option"),
+  workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
+}) => {
   const contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
 CATALYST_JS_SELECTOR=\\( -name "*.js" -o -name "*.cjs" -o -name "*.mjs" \\)
@@ -20,7 +21,7 @@ CATALYST_JS_TEST_FILES_BUILT:=$(patsubst %.cjs, %.js, $(patsubst %.mjs, %.js, $(
 
   const priority = 20
   const relDataFinder = fsPath.join('make', priority + '-js-src-finder.mk')
-  const absDataFinder = fsPath.join(cwd, relDataFinder)
+  const absDataFinder = fsPath.join(workingPkgRoot, relDataFinder)
 
   fs.writeFile(absDataFinder, contents)
 
