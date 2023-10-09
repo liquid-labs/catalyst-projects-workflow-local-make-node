@@ -27,11 +27,13 @@
   },
   "homepage": "https://github.com/liquid-labs/catalyst-builder-node#readme",
   "devDependencies": {
-    "@liquid-labs/catalyst-scripts-node-project": "^1.0.0-alpha.22"
+    "@liquid-labs/catalyst-resource-babel-and-rollup": "^1.0.0-alpha.3",
+    "@liquid-labs/catalyst-resource-eslint": "^1.0.0-alpha.1",
+    "@liquid-labs/catalyst-resource-jest": "^1.0.0-alpha.3"
   },
   "dependencies": {
-    "@liquid-labs/catalyst-lib-build": "^1.0.0-alpha.9",
-    "@liquid-labs/catalyst-lib-makefiles": "^1.0.0-alpha.4",
+    "@liquid-labs/catalyst-lib-build": "^1.0.0-alpha.10",
+    "@liquid-labs/catalyst-lib-makefiles": "file:.yalc/@liquid-labs/catalyst-lib-makefiles",
     "@liquid-labs/http-smart-response": "^1.0.0-alpha.3",
     "@liquid-labs/npm-toolkit": "^1.0.0-alpha.4",
     "http-error": "^0.0.6",
