@@ -1,6 +1,5 @@
-import { gatherBasicBuilderData, saveBuilderConfig } from '@liquid-labs/catalyst-lib-build'
+import { gatherBasicBuilderData, processBuilderResults } from '@liquid-labs/catalyst-lib-build'
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
-import { install } from '@liquid-labs/npm-toolkit'
 
 import { setupProject } from './lib/setup-project'
 
@@ -98,18 +97,7 @@ const func = ({ app, reporter }) => async(req, res) => {
   const data = await setupProject({ myName, myVersion, reporter, workingPkgRoot, ...req.vars })
   data.config = req.vars
 
-  await saveBuilderConfig({ config : data, path, pkgRoot : workingPkgRoot })
-
-  const { noDevInstall, noInstall } = req.vars
-  if (noInstall === true) {
-    reporter.log('Skipping dependency install.')
-  }
-  else {
-    const { dependencies } = data
-    reporter.log(`Installing ${dependencies.join(', ')}`)
-    const devPaths = noDevInstall === true ? [] : app.ext.devPaths
-    install({ devPaths, latest : true, pkgs : dependencies, saveDev : true, targetPath : workingPkgRoot })
-  }
+  await processBuilderResults({ app, path, pkgRoot : workingPkgRoot, reporter, results : data, ...req.vars })
 
   const msg = `Created ${data.scripts} files.`
 
