@@ -5,6 +5,7 @@ import * as fsPath from 'node:path'
 import createError from 'http-errors'
 
 import { setupMakefileInfra, setupMakefileLocations } from '@liquid-labs/catalyst-lib-makefiles'
+import { getPackageJSON } from '@liquid-labs/npm-toolkit'
 
 import { searchForIndex } from './search-for-index'
 import { setupLibraryBuilds, setupExecutableBuilds } from './setup-builds'
@@ -46,11 +47,9 @@ const setupProject = async(options) => {
 
   if (withExecutables.length === 0 && withLibs.length === 0) {
     // then we need to analyze things to figure out what kind of work to do
-    const pkgPath = fsPath.join(workingPkgRoot, 'package.json')
     let main
     try {
-      const pkgContents = await fs.readFile(pkgPath, { encoding : 'utf8' })
-      const pkgJSON = JSON.parse(pkgContents);
+      const pkgJSON = await getPackageJSON({ pkgDir : workingPkgRoot });
       ({ main } = pkgJSON)
     }
     catch (e) {
