@@ -32,10 +32,10 @@
     "@liquid-labs/catalyst-resource-jest": "^1.0.0-alpha.3"
   },
   "dependencies": {
-    "@liquid-labs/catalyst-lib-build": "^1.0.0-alpha.10",
-    "@liquid-labs/catalyst-lib-makefiles": "^1.0.0-alpha.4",
+    "@liquid-labs/catalyst-lib-build": "^1.0.0-alpha.11",
+    "@liquid-labs/catalyst-lib-makefiles": "file:.yalc/@liquid-labs/catalyst-lib-makefiles",
     "@liquid-labs/http-smart-response": "^1.0.0-alpha.3",
-    "@liquid-labs/npm-toolkit": "^1.0.0-alpha.4",
+    "@liquid-labs/npm-toolkit": "^1.0.0-alpha.7",
     "http-error": "^0.0.6",
     "lodash": "^4.17.21"
   }
