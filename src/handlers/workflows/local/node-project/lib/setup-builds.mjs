@@ -17,7 +17,7 @@ const setupBuilds = async({
   reporter,
   workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
 }) => {
-  const scripts = []
+  const artifacts = []
 
   for (const build of builds) {
     const [entryFile, buildTarget] = build.split(':')
@@ -63,7 +63,7 @@ $(${varName}): package.json $(CATALYST_ALL_NON_TEST_JS_FILES_SRC)
 
 	  await fs.writeFile(absBuildScriptPath, contents)
 
-	  scripts.push({
+	  artifacts.push({
   		builder : myName,
       version : myVersion,
       priority,
@@ -74,7 +74,7 @@ $(${varName}): package.json $(CATALYST_ALL_NON_TEST_JS_FILES_SRC)
 
   return {
   	dependencies : [BABEL_AND_ROLLUP_RESOURCE],
-  	scripts
+  	artifacts
   }
 }
 

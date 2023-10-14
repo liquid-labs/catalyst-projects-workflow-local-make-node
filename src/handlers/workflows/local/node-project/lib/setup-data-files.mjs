@@ -24,7 +24,7 @@ CATALYST_TEST_DATA_BUILT:=$(patsubst $(SRC)/%, $(TEST_STAGING)/%, $(CATALYST_TES
   fs.writeFile(absDataFinder, contents)
 
   return {
-    scripts : [
+    artifacts : [
       {
         builder : myName,
         version : myVersion,

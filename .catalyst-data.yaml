@@ -5,7 +5,7 @@ workflows:
         - '@liquid-labs/catalyst-resource-babel-and-rollup'
         - '@liquid-labs/catalyst-resource-eslint'
         - '@liquid-labs/catalyst-resource-jest'
-      scripts:
+      artifacts:
         - builder: '@liquid-labs/catalyst-builder-node'
           version: 1.0.0-alpha.0
           priority: 0

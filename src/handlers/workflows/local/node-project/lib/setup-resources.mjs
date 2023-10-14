@@ -39,7 +39,7 @@ CATALYST_ESLINT_CONFIG:=$(shell npm explore ${ESLINT_RESOURCE} -- pwd)/dist/esli
 
   return {
     dependencies : [ESLINT_RESOURCE, JEST_RESOURCE, BABEL_AND_ROLLUP_RESOURCE],
-    scripts      : [
+    artifacts    : [
       {
         builder : myName,
         version : myVersion,
