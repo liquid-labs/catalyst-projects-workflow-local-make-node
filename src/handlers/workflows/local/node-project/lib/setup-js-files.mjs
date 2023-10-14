@@ -26,7 +26,7 @@ CATALYST_JS_TEST_FILES_BUILT:=$(patsubst %.cjs, %.js, $(patsubst %.mjs, %.js, $(
   fs.writeFile(absDataFinder, contents)
 
   return {
-    scripts : [
+    artifacts : [
       {
         builder : myName,
         version : myVersion,

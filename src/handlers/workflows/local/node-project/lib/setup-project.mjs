@@ -143,8 +143,8 @@ const setupProject = async(options) => {
   let allScripts = []
   const dependencyIndex = {}
   for (const result of results) {
-    const { dependencies = [], scripts = [] } = result
-    allScripts.push(...scripts)
+    const { dependencies = [], artifacts = [] } = result
+    allScripts.push(...artifacts)
     for (const dep of dependencies) {
       dependencyIndex[dep] = true
     }
@@ -158,7 +158,7 @@ const setupProject = async(options) => {
       else return 0
     })
 
-  const data = { dependencies, scripts : allScripts }
+  const data = { dependencies, artifacts : allScripts }
 
   return data
 }

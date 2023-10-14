@@ -99,7 +99,7 @@ const func = ({ app, reporter }) => async(req, res) => {
 
   await processBuilderResults({ app, path, pkgRoot : workingPkgRoot, reporter, results : data, ...req.vars })
 
-  const msg = `Created ${data.scripts} files.`
+  const msg = `Created ${data.artifacts.length} files.`
 
   httpSmartResponse({ msg, data, req, res })
 }

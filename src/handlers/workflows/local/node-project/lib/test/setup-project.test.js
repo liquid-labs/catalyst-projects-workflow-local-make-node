@@ -19,6 +19,6 @@ describe('setupProjects', () => {
       workingPkgRoot
     })
 
-    expect(data.scripts).toHaveLength(9)
+    expect(data.artifacts).toHaveLength(9)
   })
 })

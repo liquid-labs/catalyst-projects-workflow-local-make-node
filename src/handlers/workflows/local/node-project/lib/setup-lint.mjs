@@ -66,7 +66,7 @@ lint-fix:
 
   return {
     dependencies : [ESLINT_RESOURCE],
-    scripts      : [
+    artifacts      : [
       {
         builder : myName,
         version : myVersion,
