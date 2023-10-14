@@ -77,7 +77,7 @@ $(CATALYST_COVERAGE_REPORTS): $(CATALYST_TEST_PASS_MARKER) $(TEST_STAGING)/cover
 
   return {
     dependencies : [ESLINT_RESOURCE, BABEL_AND_ROLLUP_RESOURCE],
-    artifacts      : [
+    artifacts    : [
       {
         builder : myName,
         version : myVersion,
