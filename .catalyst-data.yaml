@@ -41,7 +41,9 @@ workflows:
           version: 1.0.0-alpha.0
           priority: 50
           path: make/50-catalyst-builder-workflow-local-make-node-js.mk
-          purpose: Builds the 'dist/catalyst-builder-workflow-local-make-node.js' artifact.
+          purpose: >-
+            Builds the 'dist/catalyst-builder-workflow-local-make-node.js'
+            artifact.
         - builder: '@liquid-labs/catalyst-builder-workflow-local-make-node'
           version: 1.0.0-alpha.0
           priority: 55
