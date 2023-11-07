@@ -1,5 +1,5 @@
-import * as setupNodeInfraHandler from './setup-node-infra'
+import * as addHandler from './add'
 
-const handlers = [setupNodeInfraHandler]
+const handlers = [addHandler]
 
 export { handlers }
