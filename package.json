@@ -1,8 +1,8 @@
 {
-  "name": "@liquid-labs/catalyst-builder-workflow-local-make-node",
+  "name": "@liquid-labs/catalyst-projects-workflow-local-make-node",
   "version": "1.0.0-alpha.0",
   "description": "",
-  "main": "dist/catalyst-builder-workflow-local-make-node.js",
+  "main": "dist/catalyst-projects-workflow-local-make-node.js",
   "files": [
     "dist/"
   ],
@@ -22,13 +22,13 @@
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "UNLICENSED",
   "repository": {
-    "url": "git+ssh://git@github.com/liquid-labs/catalyst-builder-workflow-local-make-node.git",
+    "url": "git+ssh://git@github.com/liquid-labs/catalyst-projects-workflow-local-make-node.git",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/liquid-labs/catalyst-builder-workflow-local-make-node/issues"
+    "url": "https://github.com/liquid-labs/catalyst-projects-workflow-local-make-node/issues"
   },
-  "homepage": "https://github.com/liquid-labs/catalyst-builder-workflow-local-make-node#readme",
+  "homepage": "https://github.com/liquid-labs/catalyst-projects-workflow-local-make-node#readme",
   "devDependencies": {
     "@liquid-labs/catalyst-resource-babel-and-rollup": "^1.0.0-alpha.3",
     "@liquid-labs/catalyst-resource-eslint": "^1.0.0-alpha.1",
