@@ -12,7 +12,7 @@ describe('setupProjects', () => {
   test('creates files for single, root lib package', async() => {
     const workingPkgRoot = fsPath.join(__dirname, 'data', 'pkgA')
     const data = await setupProject({
-      myName    : '@liquid-labs/catalyst-builder-workflow-local-make-node',
+      myName    : '@liquid-labs/catalyst-projects-workflow-local-make-node',
       myVersion : 'test-version',
       noDoc     : true,
       reporter,
