@@ -23,6 +23,7 @@ const setupProject = async(options) => {
     docSrcPath = 'doc',
     myName = throw new Error("Missing required 'myName' option calling 'setupProject'."),
     myVersion = throw new Error("Missing required 'myVersion' option calling 'setupProject'."),
+    noBuild,
     noDoc,
     noLint,
     noTest,
@@ -99,7 +100,7 @@ const setupProject = async(options) => {
     }
   }
 
-  if (withExecutables.length === 0 && withLibs.length === 0) {
+  if (withExecutables.length === 0 && withLibs.length === 0 && noBuild !== true) {
     throw createError.BadRequest('No library or executable source could be identified; bailing out.')
   }
 
@@ -125,10 +126,13 @@ const setupProject = async(options) => {
     }),
     setupDataFiles({ myName, myVersion, workingPkgRoot }),
     setupResources({ myName, myVersion, noDoc, noTest, workingPkgRoot }),
-    setupJSFiles({ myName, myVersion, workingPkgRoot }),
-    setupLibraryBuilds({ myName, myVersion, reporter, withLibs, workingPkgRoot }),
-    setupExecutableBuilds({ myName, myVersion, reporter, withExecutables, workingPkgRoot })
+    setupJSFiles({ myName, myVersion, workingPkgRoot })
   ]
+
+  if (noBuild !== true) {
+    scriptBuilders.push(setupLibraryBuilds({ myName, myVersion, reporter, withLibs, workingPkgRoot }))
+    scriptBuilders.push(setupExecutableBuilds({ myName, myVersion, reporter, withExecutables, workingPkgRoot }))
+  }
 
   if (noLint !== true) {
     scriptBuilders.push(setupLint({ myName, myVersion, noDoc, noTest, workingPkgRoot }))
