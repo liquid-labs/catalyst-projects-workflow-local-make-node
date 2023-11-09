@@ -1,6 +1,6 @@
 {
   "name": "@liquid-labs/catalyst-projects-workflow-local-make-node",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "",
   "main": "dist/catalyst-projects-workflow-local-make-node.js",
   "files": [
