@@ -126,7 +126,7 @@ const setupProject = async(options) => {
     }),
     setupDataFiles({ myName, myVersion, workingPkgRoot }),
     setupResources({ myName, myVersion, noDoc, noTest, workingPkgRoot }),
-    setupJSFiles({ myName, myVersion, workingPkgRoot }),
+    setupJSFiles({ myName, myVersion, workingPkgRoot })
   ]
 
   if (noBuild !== true) {
