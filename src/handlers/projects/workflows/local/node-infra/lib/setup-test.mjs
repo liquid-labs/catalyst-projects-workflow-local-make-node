@@ -38,6 +38,8 @@ $(CATALYST_TEST_DATA_BUILT): $(TEST_STAGING)/%: $(SRC)/%
 	@cp $< $@
 
 # Jest is not picking up the external maps, so we inline them for the test. (As of?)
+# We tried to ignore the data directories in the babel config, but as of 7.23.4, it didn't seem to work. This problem 
+# has been reported, though it claims to be fixed
 $(CATALYST_TEST_FILES_BUILT) &: $(CATALYST_ALL_JS_FILES_SRC)
 	rm -rf $(TEST_STAGING)
 	mkdir -p $(TEST_STAGING)
@@ -45,6 +47,7 @@ $(CATALYST_TEST_FILES_BUILT) &: $(CATALYST_ALL_JS_FILES_SRC)
 		--config-file=$(CATALYST_BABEL_CONFIG) \\
 		--out-dir=./$(TEST_STAGING) \\
 		--source-maps=inline \\
+    --ignore='**/test/data/**' --ignore='**/test-data/**' \\
 		$(SRC)
 
 $(CATALYST_TEST_PASS_MARKER) $(CATALYST_TEST_REPORT) $(TEST_STAGING)/coverage &: package.json $(CATALYST_TEST_FILES_BUILT) $(CATALYST_TEST_DATA_BUILT)
