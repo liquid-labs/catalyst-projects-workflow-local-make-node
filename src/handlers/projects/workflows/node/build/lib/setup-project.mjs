@@ -4,7 +4,7 @@ import * as fsPath from 'node:path'
 
 import createError from 'http-errors'
 
-import { setupMakefileInfra, setupMakefileLocations } from '@liquid-labs/catalyst-lib-makefiles'
+import { setupMakefileInfra, setupMakefileLocations } from '@liquid-labs/sdlc-lib-makefiles'
 import { getPackageJSON } from '@liquid-labs/npm-toolkit'
 
 import { searchForIndex } from './search-for-index'

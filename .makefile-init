@@ -1,1 +1,0 @@
-npx catalyst-scripts-node-project --update-makefile --update-gitignore --lib-entry-file=index.mjs

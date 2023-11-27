@@ -2,7 +2,7 @@
 import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
-import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
+import { COMPLY_GENERATED_FILE_NOTICE } from '@liquid-labs/comply-defaults'
 
 import { ESLINT_RESOURCE } from './constants'
 
@@ -13,16 +13,16 @@ const setupLint = async({
   noTest,
   workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
 }) => {
-  let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
+  let contents = `${COMPLY_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
 #####
 # lint rules
 #####
 
-CATALYST_LINT_REPORT:=$(QA)/lint.txt
-CATALYST_LINT_PASS_MARKER:=$(QA)/.lint.passed
-LINT_TARGETS+=$(CATALYST_LINT_REPORT) $(CATALYST_LINT_PASS_MARKER)
-PRECIOUS_TARGETS+=$(CATALYST_LINT_REPORT)
+SDLC_LINT_REPORT:=$(QA)/lint.txt
+SDLC_LINT_PASS_MARKER:=$(QA)/.lint.passed
+LINT_TARGETS+=$(SDLC_LINT_REPORT) $(SDLC_LINT_PASS_MARKER)
+PRECIOUS_TARGETS+=$(SDLC_LINT_REPORT)
 
 LINT_IGNORE_PATTERNS:=--ignore-pattern '$(DIST)/**/*'`
   if (noTest !== true) {
@@ -33,23 +33,23 @@ LINT_IGNORE_PATTERNS:=--ignore-pattern '$(DIST)/**/*'`
   }
   contents += `
 
-$(CATALYST_LINT_REPORT) $(CATALYST_LINT_PASS_MARKER): $(CATALYST_ALL_JS_FILES_SRC)
+$(SDLC_LINT_REPORT) $(SDLC_LINT_PASS_MARKER): $(SDLC_ALL_JS_FILES_SRC)
 	mkdir -p $(dir $@)
-	echo -n 'Test git rev: ' > $(CATALYST_LINT_REPORT)
-	git rev-parse HEAD >> $(CATALYST_LINT_REPORT)
+	echo -n 'Test git rev: ' > $(SDLC_LINT_REPORT)
+	git rev-parse HEAD >> $(SDLC_LINT_REPORT)
 	( set -e; set -o pipefail; \\
-	  $(CATALYST_ESLINT) \\
-	    --config $(CATALYST_ESLINT_CONFIG) \\
+	  $(SDLC_ESLINT) \\
+	    --config $(SDLC_ESLINT_CONFIG) \\
 	    --ext .cjs,.js,.mjs,.cjs,.xjs \\
 	    $(LINT_IGNORE_PATTERNS) \\
 	    . \\
-	    | tee -a $(CATALYST_LINT_REPORT); \\
-	  touch $(CATALYST_LINT_PASS_MARKER) )
+	    | tee -a $(SDLC_LINT_REPORT); \\
+	  touch $(SDLC_LINT_PASS_MARKER) )
 
 lint-fix:
 	@( set -e; set -o pipefail; \\
-	  $(CATALYST_ESLINT) \\
-	    --config $(CATALYST_ESLINT_CONFIG) \\
+	  $(SDLC_ESLINT) \\
+	    --config $(SDLC_ESLINT_CONFIG) \\
 	    --ext .js,.mjs,.cjs,.xjs \\
 	    $(LINT_IGNORE_PATTERNS) \\
 	    --fix . )

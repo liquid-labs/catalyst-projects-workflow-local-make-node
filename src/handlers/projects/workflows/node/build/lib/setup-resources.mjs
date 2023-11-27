@@ -1,7 +1,7 @@
 import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
-import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
+import { COMPLY_GENERATED_FILE_NOTICE } from '@liquid-labs/comply-defaults'
 
 import { ESLINT_RESOURCE, JEST_RESOURCE, BABEL_AND_ROLLUP_RESOURCE } from './constants'
 
@@ -13,22 +13,22 @@ const setupResources = async({
   noLint,
   workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
 }) => {
-  let contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
+  let contents = `${COMPLY_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
-CATALYST_BABEL:=npx babel
-CATALYST_BABEL_CONFIG:=$(shell npm explore ${BABEL_AND_ROLLUP_RESOURCE} -- pwd)/dist/babel/babel.config.cjs
+SDLC_BABEL:=npx babel
+SDLC_BABEL_CONFIG:=$(shell npm explore ${BABEL_AND_ROLLUP_RESOURCE} -- pwd)/dist/babel/babel.config.cjs
 
-CATALYST_ROLLUP:=npx rollup
-CATALYST_ROLLUP_CONFIG:=$(shell npm explore ${BABEL_AND_ROLLUP_RESOURCE} -- pwd)/dist/rollup/rollup.config.mjs\n`
+SDLC_ROLLUP:=npx rollup
+SDLC_ROLLUP_CONFIG:=$(shell npm explore ${BABEL_AND_ROLLUP_RESOURCE} -- pwd)/dist/rollup/rollup.config.mjs\n`
 
   if (noTest !== true) {
-    contents += `\nCATALYST_JEST:=npx jest
-CATALYST_JEST_CONFIG:=$(shell npm explore ${JEST_RESOURCE} -- pwd)/dist/jest.config.js\n`
+    contents += `\nSDLC_JEST:=npx jest
+SDLC_JEST_CONFIG:=$(shell npm explore ${JEST_RESOURCE} -- pwd)/dist/jest.config.js\n`
   }
 
   if (noLint !== true) {
-    contents += `\nCATALYST_ESLINT:=npx eslint
-CATALYST_ESLINT_CONFIG:=$(shell npm explore ${ESLINT_RESOURCE} -- pwd)/dist/eslint.config.js\n`
+    contents += `\nSDLC_ESLINT:=npx eslint
+SDLC_ESLINT_CONFIG:=$(shell npm explore ${ESLINT_RESOURCE} -- pwd)/dist/eslint.config.js\n`
   }
 
   const priority = 10
