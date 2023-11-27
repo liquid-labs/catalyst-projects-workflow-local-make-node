@@ -13,7 +13,7 @@ const help = {
 }
 
 const method = 'put'
-const path = ['projects', 'workflows', 'local', 'node-infra', 'add']
+const path = ['projects', 'workflows', 'node', 'build', 'add']
 const parameters = [
   {
     name        : 'distPath',
