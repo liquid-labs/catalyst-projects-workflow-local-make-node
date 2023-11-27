@@ -1,4 +1,4 @@
-import { gatherBasicBuilderData, processBuilderResults } from '@liquid-labs/catalyst-lib-build'
+import { gatherBasicBuilderData, processBuilderResults } from '@liquid-labs/sdlc-lib-build'
 import { httpSmartResponse } from '@liquid-labs/http-smart-response'
 
 import { setupProject } from './lib/setup-project'

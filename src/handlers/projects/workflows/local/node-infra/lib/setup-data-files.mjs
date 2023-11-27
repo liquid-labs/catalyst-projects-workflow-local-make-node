@@ -1,20 +1,20 @@
 import * as fsPath from 'node:path'
 import * as fs from 'node:fs/promises'
 
-import { CATALYST_GENERATED_FILE_NOTICE } from '@liquid-labs/catalyst-defaults'
+import { COMPLY_GENERATED_FILE_NOTICE } from '@liquid-labs/comply-defaults'
 
 const setupDataFiles = async({
   myName = throw new Error("Missing required 'myName' option"),
   myVersion = throw new Error("Missing required 'myVersion' option"),
   workingPkgRoot = throw new Error("Missing required option 'workingPkgRoot'.")
 }) => {
-  const contents = `${CATALYST_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
+  const contents = `${COMPLY_GENERATED_FILE_NOTICE({ builderNPMName : myName, commentToken : '#' })}
 
-CATALYST_DATA_SELECTOR=\\( -path "*/test/data/*"  -o -path "*/test/data-*/*" -o -path "*/test-data/*" \\)
+SDLC_DATA_SELECTOR=\\( -path "*/test/data/*"  -o -path "*/test/data-*/*" -o -path "*/test-data/*" \\)
 
 # all test data (cli and lib)
-CATALYST_TEST_DATA_SRC:=$(shell find $(SRC) -type f $(CATALYST_DATA_SELECTOR))
-CATALYST_TEST_DATA_BUILT:=$(patsubst $(SRC)/%, $(TEST_STAGING)/%, $(CATALYST_TEST_DATA_SRC))
+SDLC_TEST_DATA_SRC:=$(shell find $(SRC) -type f $(SDLC_DATA_SELECTOR))
+SDLC_TEST_DATA_BUILT:=$(patsubst $(SRC)/%, $(TEST_STAGING)/%, $(SDLC_TEST_DATA_SRC))
 `
 
   const priority = 15
