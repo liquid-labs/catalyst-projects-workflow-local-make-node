@@ -1,6 +1,6 @@
 {
   "name": "@liquid-labs/sdlc-projects-workflow-node-build",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "",
   "main": "dist/sdlc-projects-workflow-node-build.js",
   "files": [
@@ -45,7 +45,9 @@
   },
   "_npm-check-plus": {
     "depcheck": {
-      "ignoreMatches": ["@liquid-labs/sdlc-resource-*"]
+      "ignoreMatches": [
+        "@liquid-labs/sdlc-resource-*"
+      ]
     }
   }
 }
