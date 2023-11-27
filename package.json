@@ -42,5 +42,10 @@
     "@liquid-labs/sdlc-lib-makefiles": "^1.0.0-alpha.7",
     "http-errors": "^2.0.0",
     "lodash": "^4.17.21"
+  },
+  "_npm-check-plus": {
+    "depcheck": {
+      "ignoreMatches": ["@liquid-labs/sdlc-resource-*"]
+    }
   }
 }
