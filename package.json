@@ -1,8 +1,8 @@
 {
-  "name": "@liquid-labs/sdlc-projects-workflow-node-build",
+  "name": "@liquid-labs/sdlc-projects-workflow-local-node-build",
   "version": "1.0.0-alpha.3",
   "description": "",
-  "main": "dist/sdlc-projects-workflow-node-build.js",
+  "main": "dist/sdlc-projects-workflow-local-node-build.js",
   "files": [
     "dist/"
   ],
@@ -22,13 +22,13 @@
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
   "license": "UNLICENSED",
   "repository": {
-    "url": "git+ssh://git@github.com/liquid-labs/sdlc-projects-workflow-node-build.git",
+    "url": "git+ssh://git@github.com/liquid-labs/sdlc-projects-workflow-local-node-build.git",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/liquid-labs/sdlc-projects-workflow-node-build/issues"
+    "url": "https://github.com/liquid-labs/sdlc-projects-workflow-local-node-build/issues"
   },
-  "homepage": "https://github.com/liquid-labs/sdlc-projects-workflow-node-build#readme",
+  "homepage": "https://github.com/liquid-labs/sdlc-projects-workflow-local-node-build#readme",
   "devDependencies": {
     "@liquid-labs/sdlc-resource-babel-and-rollup": "^1.0.0-alpha.5",
     "@liquid-labs/sdlc-resource-eslint": "^1.0.0-alpha.2",
