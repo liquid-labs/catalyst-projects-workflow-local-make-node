@@ -12,7 +12,7 @@ describe('setupProjects', () => {
   test('creates files for single, root lib package', async() => {
     const workingPkgRoot = fsPath.join(__dirname, 'data', 'pkgA')
     const data = await setupProject({
-      myName    : '@liquid-labs/sdlc-projects-workflow-node-build',
+      myName    : '@liquid-labs/sdlc-projects-workflow-local-node-build',
       myVersion : 'test-version',
       noDoc     : true,
       reporter,
