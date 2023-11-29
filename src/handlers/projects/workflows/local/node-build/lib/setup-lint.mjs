@@ -29,7 +29,7 @@ LINT_IGNORE_PATTERNS:=--ignore-pattern '$(DIST)/**/*'`
     contents += '\\\n--ignore-pattern \'$(TEST_STAGING)/**/*\''
   }
   if (noDoc !== true) {
-    contents += '\\\n--ignore-pattern \'$(DOCS)/**/*\''
+    contents += '\\\n--ignore-pattern \'$(DOC)/**/*\''
   }
   contents += `
 
