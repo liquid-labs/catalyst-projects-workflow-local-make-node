@@ -16,6 +16,11 @@ const method = 'put'
 const path = ['projects', 'workflows', 'local', 'node-build', 'add']
 const parameters = [
   {
+    name        : 'devInstall',
+    isBoolean   : true,
+    description : 'If true, will install local development versions of the build dependencies (sdlc-resource libraries) if present.'
+  },
+  {
     name        : 'distPath',
     description : "Defines the package root relative distribution directory. Defaults to settings value 'dist'."
   },
@@ -36,11 +41,6 @@ const parameters = [
     name        : 'noBuild',
     isBoolean   : true,
     description : 'If true, then no build rules are generated. This can be useful for integration test only repos, for example.'
-  },
-  {
-    name        : 'noDevInstall',
-    isBoolean   : true,
-    description : 'If true, supresses the default behavior of looking for local development packages of resource packages to install. In other words, will always use the latest published package.'
   },
   {
     name        : 'noDoc',
